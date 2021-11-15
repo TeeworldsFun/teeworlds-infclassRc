@@ -789,6 +789,9 @@ void CGameContext::SendBroadcast_ClassIntro(int ClientID, int Class)
 		case PLAYERCLASS_LOOPER:
 			pClassName = Server()->Localization()->Localize(m_apPlayers[ClientID]->GetLanguage(), _("Looper"));
 			break;
+		case PLAYERCLASS_FFS:
+			pClassName = Server()->Localization()->Localize(m_apPlayers[ClientID]->GetLanguage(), _("FlowerFell-Sans"));
+			break;
 		case PLAYERCLASS_SMOKER:
 			pClassName = Server()->Localization()->Localize(m_apPlayers[ClientID]->GetLanguage(), _("Smoker"));
 			break;
@@ -2972,6 +2975,7 @@ bool CGameContext::ConSetClass(IConsole::IResult *pResult, void *pUserData)
 	else if(str_comp(pClassName, "ninja") == 0) pPlayer->SetClass(PLAYERCLASS_NINJA);
 	else if(str_comp(pClassName, "mercenary") == 0) pPlayer->SetClass(PLAYERCLASS_MERCENARY);
 	else if(str_comp(pClassName, "sniper") == 0) pPlayer->SetClass(PLAYERCLASS_SNIPER);
+	else if(str_comp(pClassName, "flowerfell-sans") == 0) pPlayer->SetClass(PLAYERCLASS_FFS);
 	else if(str_comp(pClassName, "smoker") == 0) pPlayer->SetClass(PLAYERCLASS_SMOKER);
 	else if(str_comp(pClassName, "hunter") == 0) pPlayer->SetClass(PLAYERCLASS_HUNTER);
 	else if(str_comp(pClassName, "bat") == 0) pPlayer->SetClass(PLAYERCLASS_BAT);
@@ -3149,6 +3153,11 @@ bool CGameContext::PrivateMessage(const char* pStr, int ClientID, bool TeamChat)
 			{
 				CheckClass = PLAYERCLASS_MEDIC;
 				str_copy(aChatTitle, "medic", sizeof(aChatTitle));
+			}
+			else if(str_comp(aNameFound, "!flowerfell-sans") == 0 && m_apPlayers[ClientID] && m_apPlayers[ClientID]->GetCharacter())
+			{
+				CheckClass = PLAYERCLASS_FFS;
+				str_copy(aChatTitle, "ffs", sizeof(aChatTitle));
 			}
 			else if(str_comp(aNameFound, "!hero") == 0 && m_apPlayers[ClientID] && m_apPlayers[ClientID]->GetCharacter())
 			{
@@ -4050,7 +4059,7 @@ bool CGameContext::ConHelp(IConsole::IResult *pResult, void *pUserData)
 		);
 		pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help", Buffer.buffer());
 		
-		pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help", "engineer, soldier, scientist, medic, hero, ninja, mercenary, sniper, whiteHole");		
+		pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help", "engineer, soldier, scientist, medic, hero, ninja, mercenary, sniper, flowerfell-sans, whiteHole");		
 		pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help", "smoker, hunter, bat, boomer, ghost, spider, ghoul, voodoo, undead, witch.");		
 	}
 	
