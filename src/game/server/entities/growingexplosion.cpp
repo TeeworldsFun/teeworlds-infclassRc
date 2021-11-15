@@ -184,7 +184,7 @@ void CGrowingExplosion::Tick()
 							}
 							break;
 						case GROWINGEXPLOSIONEFFECT_FFS_CK:
-							if (random_prob(0.2f))
+							if (random_prob(1.0f))
 							{
 								GameServer()->CreateExplosion(TileCenter, m_Owner, WEAPON_GUN, false, TAKEDAMAGEMODE_SELFHARM);
 							}

@@ -70,7 +70,7 @@ void CFFSGrenade::Tick()
 		m_ActualPos = m_Pos;
 		vec2 vel;
 		vel.x = m_Direction.x;
-		vel.y = m_Direction.y + 2*GameServer()->Tuning()->m_GrenadeCurvature/10000*Ct*GameServer()->Tuning()->m_GrenadeSpeed;
+		vel.y = m_Direction.y/* + 2*GameServer()->Tuning()->m_GrenadeCurvature/10000*Ct*GameServer()->Tuning()->m_GrenadeSpeed*/;
 		
 		if (CollideX && !CollideY)
 		{
@@ -122,5 +122,6 @@ void CFFSGrenade::Snap(int SnappingClient)
 void CFFSGrenade::Explode()
 {
 	new CGrowingExplosion(GameWorld(), m_ActualPos, m_ActualDir, m_Owner, 4, GROWINGEXPLOSIONEFFECT_FFS_CK);
+	GameServer()->CreateSoundGlobal(SOUND_GRENADE_EXPLODE);
 	GameServer()->m_World.DestroyEntity(this);
 }
