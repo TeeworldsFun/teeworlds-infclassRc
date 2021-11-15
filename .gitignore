@@ -24,3 +24,7 @@ src/game/generated
 /infclass_editor*
 /bin/server_d
 /bin
+
+/build
+/infclassR.log
+/Infclass-Server

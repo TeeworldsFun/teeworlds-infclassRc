@@ -28,6 +28,7 @@
 #include "scatter-grenade.h"
 #include "merc-bomb.h"
 #include "medic-grenade.h"
+#include "ffs-grenade.h"
 #include "hero-flag.h"
 #include "slug-slime.h"
 #include "plasma.h"
@@ -617,7 +618,8 @@ void CCharacter::FireWeapon()
 	if(CountInput(m_LatestPrevInput.m_Fire, m_LatestInput.m_Fire).m_Presses)
 		WillFire = true;
 	else if(FullAuto && (m_LatestInput.m_Fire&1) && (m_aWeapons[m_ActiveWeapon].m_Ammo || (GetInfWeaponID(m_ActiveWeapon) == INFWEAPON_MERCENARY_GRENADE)
-																					   || (GetInfWeaponID(m_ActiveWeapon) == INFWEAPON_MEDIC_GRENADE)))
+																					   || (GetInfWeaponID(m_ActiveWeapon) == INFWEAPON_MEDIC_GRENADE)
+																					   || (GetInfWeaponID(m_ActiveWeapon) == INFWEAPON_FFS_GRENADE)))
 	{
 		AutoFire = true;
 		WillFire = true;
@@ -1232,6 +1234,42 @@ void CCharacter::FireWeapon()
 						float a = GetAngle(Direction) + random_float()/5.0f;
 						
 						CMedicGrenade *pProj = new CMedicGrenade(GameWorld(), m_pPlayer->GetCID(), m_Pos, vec2(cosf(a), sinf(a)));
+
+						// pack the Projectile and send it to the client Directly
+						CNetObj_Projectile p;
+						pProj->FillInfo(&p);
+
+						for(unsigned i = 0; i < sizeof(CNetObj_Projectile)/sizeof(int); i++)
+							Msg.AddInt(((int *)&p)[i]);
+						Server()->SendMsg(&Msg, MSGFLAG_VITAL, m_pPlayer->GetCID());
+					}
+
+					GameServer()->CreateSound(m_Pos, SOUND_GRENADE_FIRE);
+				}
+			}
+			else if(GetClass() == PLAYERCLASS_FFS)
+			{
+				//Find bomb
+				bool BombFound = false;
+				for(CFFSGrenade *pGun = (CFFSGrenade*) GameWorld()->FindFirst(CGameWorld::ENTTYPE_FFS_GRENADE); pGun; pGun = (CFFSGrenade*) pGun->TypeNext())
+				{
+					if(pGun->m_Owner != m_pPlayer->GetCID()) continue;
+					pGun->Explode();
+					BombFound = true;
+				}
+				
+				if(!BombFound && m_aWeapons[m_ActiveWeapon].m_Ammo)
+				{
+					int ShotSpread = 0;
+					
+					CMsgPacker Msg(NETMSGTYPE_SV_EXTRAPROJECTILE);
+					Msg.AddInt(ShotSpread*2+1);
+					
+					for(int i = -ShotSpread; i <= ShotSpread; ++i)
+					{
+						float a = GetAngle(Direction) + random_float()/5.0f;
+						
+						CFFSGrenade *pProj = new CFFSGrenade(GameWorld(), m_pPlayer->GetCID(), m_Pos, vec2(cosf(a), sinf(a)));
 
 						// pack the Projectile and send it to the client Directly
 						CNetObj_Projectile p;
@@ -2223,6 +2261,13 @@ void CCharacter::Tick()
 							Broadcast = true;
 						}
 						break;
+					case CMapConverter::MENUCLASS_FFS:
+						if(GameServer()->m_pController->IsChoosableClass(PLAYERCLASS_FFS))
+						{
+							GameServer()->SendBroadcast_Localization(m_pPlayer->GetCID(), BROADCAST_PRIORITY_INTERFACE, BROADCAST_DURATION_REALTIME, _("FlowerFell-Sans"), NULL);
+							Broadcast = true;
+						}
+						break;
 				}
 			}
 			
@@ -2272,6 +2317,9 @@ void CCharacter::Tick()
 						break;
 					case CMapConverter::MENUCLASS_LOOPER:
 						NewClass = PLAYERCLASS_LOOPER;
+						break;
+					case CMapConverter::MENUCLASS_FFS:
+						NewClass = PLAYERCLASS_FFS;
 						break;
 				}
 				
@@ -2581,6 +2629,11 @@ void CCharacter::GiveGift(int GiftType)
 		case PLAYERCLASS_MERCENARY:
 			GiveWeapon(WEAPON_GUN, -1);
 			GiveWeapon(WEAPON_GRENADE, -1);
+			break;
+		case PLAYERCLASS_FFS:
+			GiveWeapon(WEAPON_GUN, -1);
+			GiveWeapon(WEAPON_GRENADE, -1);
+			GiveWeapon(WEAPON_RIFLE, -1);
 			break;
 	}
 }
@@ -3593,6 +3646,24 @@ void CCharacter::ClassSpawnAttributes()
 				m_pPlayer->m_knownClass[PLAYERCLASS_MEDIC] = true;
 			}
 			break;
+		case PLAYERCLASS_FFS:
+			RemoveAllGun();
+			m_pPlayer->m_InfectionTick = -1;
+			m_Health = 15;
+			m_aWeapons[WEAPON_HAMMER].m_Got = true;
+			GiveWeapon(WEAPON_HAMMER, -1);
+			GiveWeapon(WEAPON_GUN, -1);
+			GiveWeapon(WEAPON_GRENADE, -1);
+			GiveWeapon(WEAPON_RIFLE, -1);
+			m_ActiveWeapon = WEAPON_RIFLE;
+			
+			GameServer()->SendBroadcast_ClassIntro(m_pPlayer->GetCID(), PLAYERCLASS_FFS);
+			if(!m_pPlayer->IsKnownClass(PLAYERCLASS_FFS))
+			{
+				GameServer()->SendChatTarget_Localization(m_pPlayer->GetCID(), CHATCATEGORY_DEFAULT, _("Type “/help flowerfell-sans” for more information about your class"), NULL);
+				m_pPlayer->m_knownClass[PLAYERCLASS_FFS] = true;
+			}
+			break;
 		case PLAYERCLASS_HERO:
 			RemoveAllGun();
 			m_pPlayer->m_InfectionTick = -1;
@@ -3848,6 +3919,11 @@ void CCharacter::DestroyChildEntities()
 		if(pGrenade->m_Owner != m_pPlayer->GetCID()) continue;
 			GameServer()->m_World.DestroyEntity(pGrenade);
 	}
+	for(CFFSGrenade* pGun = (CFFSGrenade*) GameWorld()->FindFirst(CGameWorld::ENTTYPE_FFS_GRENADE); pGun; pGun = (CFFSGrenade*) pGun->TypeNext())
+	{
+		if(pGun->m_Owner != m_pPlayer->GetCID()) continue;
+			GameServer()->m_World.DestroyEntity(pGun);
+	}
 	for(CMercenaryBomb *pBomb = (CMercenaryBomb*) GameWorld()->FindFirst(CGameWorld::ENTTYPE_MERCENARY_BOMB); pBomb; pBomb = (CMercenaryBomb*) pBomb->TypeNext())
 	{
 		if(pBomb->m_Owner != m_pPlayer->GetCID()) continue;
@@ -4072,6 +4148,8 @@ int CCharacter::GetInfWeaponID(int WID)
 				return INFWEAPON_HERO_GRENADE;
 			case PLAYERCLASS_LOOPER:
 				return INFWEAPON_LOOPER_GRENADE;
+			case PLAYERCLASS_FFS:
+				return INFWEAPON_FFS_GRENADE;
 			default:
 				return INFWEAPON_GRENADE;
 		}
@@ -4094,6 +4172,8 @@ int CCharacter::GetInfWeaponID(int WID)
 				return INFWEAPON_BIOLOGIST_RIFLE;
 			case PLAYERCLASS_MEDIC:
 				return INFWEAPON_MEDIC_RIFLE;
+			case PLAYERCLASS_FFS:
+				return INFWEAPON_FFS_RIFLE;
 			default:
 				return INFWEAPON_RIFLE;
 		}

@@ -566,10 +566,11 @@ void CMapConverter::Finalize()
 	int NinjaImageID = AddExternalImage("../skins/x_ninja", 256, 128);
 	int MercenaryImageID = AddExternalImage("../skins/bluestripe", 256, 128);
 	int SniperImageID = AddExternalImage("../skins/warpaint", 256, 128);
+	int FFSImageID = AddExternalImage("../skins/pinky", 256, 128);
 	
 	//Menu
 	
-	const float MenuRadius = 196.0f;
+	const float MenuRadius = 240.0f;
 	const float MenuAngleStart = -pi/2.0f;
 	
 	{
@@ -648,6 +649,7 @@ void CMapConverter::Finalize()
 							ClassMask = MASK_DEFENDER;
 							break;
 						case MENUCLASS_LOOPER:
+						case MENUCLASS_FFS:
 							ClassMask = MASK_DEFENDER;
 							break;
 						case MENUCLASS_MEDIC:
@@ -817,6 +819,9 @@ void CMapConverter::Finalize()
 								break;
 							case MENUCLASS_SNIPER:
 								AddTeeLayer("Sniper", SniperImageID, Pos, 64.0f, m_NumEnvs-1);
+								break;
+							case MENUCLASS_FFS:
+								AddTeeLayer("FlowerFell-Sans", FFSImageID, Pos, 64.0f, m_NumEnvs-1);
 								break;
 						}
 					}

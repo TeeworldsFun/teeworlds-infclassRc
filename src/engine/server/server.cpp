@@ -607,6 +607,8 @@ int CServer::Init()
 	SetFireDelay(INFWEAPON_NINJA_GRENADE, GetFireDelay(INFWEAPON_GRENADE));
 	SetFireDelay(INFWEAPON_MERCENARY_GRENADE, GetFireDelay(INFWEAPON_GRENADE));
 	SetFireDelay(INFWEAPON_MERCENARY_GUN, 50);
+	SetFireDelay(INFWEAPON_FFS_GRENADE, 400);
+	SetFireDelay(INFWEAPON_FFS_RIFLE, 700);
 	
 	SetAmmoRegenTime(INFWEAPON_NONE, 0);
 	SetAmmoRegenTime(INFWEAPON_HAMMER, 0);
@@ -635,7 +637,10 @@ int CServer::Init()
 	SetAmmoRegenTime(INFWEAPON_BIOLOGIST_SHOTGUN, 675);
 	SetAmmoRegenTime(INFWEAPON_LOOPER_RIFLE, 750);
 	SetAmmoRegenTime(INFWEAPON_LOOPER_GRENADE, 5000);
-	
+	SetAmmoRegenTime(INFWEAPON_FFS_GRENADE, 5000);
+	SetAmmoRegenTime(INFWEAPON_FFS_RIFLE, 4000);
+
+
 	SetMaxAmmo(INFWEAPON_NONE, -1);
 	SetMaxAmmo(INFWEAPON_HAMMER, -1);
 	SetMaxAmmo(INFWEAPON_GUN, 10);
@@ -662,6 +667,9 @@ int CServer::Init()
 	SetMaxAmmo(INFWEAPON_BIOLOGIST_SHOTGUN, 10);
 	SetMaxAmmo(INFWEAPON_LOOPER_RIFLE, 10);
 	SetMaxAmmo(INFWEAPON_LOOPER_GRENADE, 10);
+	SetMaxAmmo(INFWEAPON_FFS_RIFLE, 7);
+	SetMaxAmmo(INFWEAPON_FFS_GRENADE, 2);
+
 	
 	SetClassAvailability(PLAYERCLASS_ENGINEER, 2);
 	SetClassAvailability(PLAYERCLASS_SOLDIER, 2);
@@ -673,6 +681,7 @@ int CServer::Init()
 	SetClassAvailability(PLAYERCLASS_SCIENTIST, 2);
 	SetClassAvailability(PLAYERCLASS_BIOLOGIST, 2);
 	SetClassAvailability(PLAYERCLASS_LOOPER, 2);
+	SetClassAvailability(PLAYERCLASS_FFS, 2);
 	
 	SetClassAvailability(PLAYERCLASS_SMOKER, 1);
 	SetClassAvailability(PLAYERCLASS_HUNTER, 1);
@@ -1638,6 +1647,9 @@ void CServer::SendServerInfo(const NETADDR *pAddr, int Token, bool Extended, boo
 					break;
 				case SQL_SCORETYPE_HERO_SCORE:
 					str_format(aBuf, sizeof(aBuf), "%s | %s: %s", g_Config.m_SvName, "HeroOfTheDay", m_aChallengeWinner);
+					break;
+				case SQL_SCORETYPE_FFS_SCORE:
+					str_format(aBuf, sizeof(aBuf), "%s | %s: %s", g_Config.m_SvName, "FFSOfTheDay", m_aChallengeWinner);
 					break;
 			}
 			lock_release(m_ChallengeLock);
@@ -3524,6 +3536,10 @@ public:
 					str_copy(pMOTD, "== Best Medic ==\n32 best scores on this map\n\n", sizeof(aBuf)-(pMOTD-aBuf));
 					pMOTD += str_length(pMOTD);
 					break;
+				case SQL_SCORETYPE_FFS_SCORE:
+					str_copy(pMOTD, "== Best FlowerFell-Sans ==\n32 best scores on this map\n\n", sizeof(aBuf)-(pMOTD-aBuf));
+					pMOTD += str_length(pMOTD);
+					break;
 				case SQL_SCORETYPE_HERO_SCORE:
 					str_copy(pMOTD, "== Best Hero ==\n32 best scores on this map\n\n", sizeof(aBuf)-(pMOTD-aBuf));
 					pMOTD += str_length(pMOTD);
@@ -3692,6 +3708,9 @@ public:
 						break;
 					case SQL_SCORETYPE_MERCENARY_SCORE:
 						str_copy(pMOTD, "== Mercenary of the day ==\nBest score in one round\n\n", sizeof(aMotdBuf)-(pMOTD-aMotdBuf));
+						break;
+					case SQL_SCORETYPE_FFS_SCORE:
+						str_copy(pMOTD, "== FlowerFell-Sans of the day ==\nBest score in one round\n\n", sizeof(aMotdBuf)-(pMOTD-aMotdBuf));
 						break;
 				}
 				pMOTD += str_length(pMOTD);
@@ -4306,6 +4325,8 @@ public:
 				UpdateScore(pSqlServer, SQL_SCORETYPE_MERCENARY_SCORE, m_PlayerStatistics.m_MercenaryScore, "Mercenary");
 			if(m_PlayerStatistics.m_SniperScore > 0)
 				UpdateScore(pSqlServer, SQL_SCORETYPE_SNIPER_SCORE, m_PlayerStatistics.m_SniperScore, "Sniper");
+			if(m_PlayerStatistics.m_FFSScore > 0)
+				UpdateScore(pSqlServer, SQL_SCORETYPE_FFS_SCORE, m_PlayerStatistics.m_FFSScore, "FlowerFell-Sans");
 				
 			if(m_PlayerStatistics.m_SmokerScore > 0)
 				UpdateScore(pSqlServer, SQL_SCORETYPE_SMOKER_SCORE, m_PlayerStatistics.m_SmokerScore, "Smoker");

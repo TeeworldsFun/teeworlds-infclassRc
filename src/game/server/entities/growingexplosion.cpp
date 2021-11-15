@@ -183,6 +183,12 @@ void CGrowingExplosion::Tick()
 								GameServer()->CreateExplosion(TileCenter, m_Owner, WEAPON_HAMMER, false, TAKEDAMAGEMODE_SELFHARM);
 							}
 							break;
+						case GROWINGEXPLOSIONEFFECT_FFS_CK:
+							if (random_prob(1.0f))
+							{
+								GameServer()->CreateExplosion(TileCenter, m_Owner, WEAPON_GUN, false, TAKEDAMAGEMODE_SELFHARM);
+							}
+							break;
 						case GROWINGEXPLOSIONEFFECT_ELECTRIC_INFECTED:
 							{
 								vec2 EndPoint = m_SeedPos + vec2(32.0f*(i-m_MaxGrowing) - 16.0f + random_float()*32.0f, 32.0f*(j-m_MaxGrowing) - 16.0f + random_float()*32.0f);
@@ -304,6 +310,13 @@ void CGrowingExplosion::Tick()
 					{
 						p->LoveEffect();
 						GameServer()->SendEmoticon(p->GetPlayer()->GetCID(), EMOTICON_HEARTS);
+						m_Hit[p->GetPlayer()->GetCID()] = true;
+						break;
+					}
+					case GROWINGEXPLOSIONEFFECT_FFS_CK:
+					{
+						p->LoveEffect();
+						GameServer()->SendEmoticon(p->GetPlayer()->GetCID(), EMOTICON_QUESTION);
 						m_Hit[p->GetPlayer()->GetCID()] = true;
 						break;
 					}

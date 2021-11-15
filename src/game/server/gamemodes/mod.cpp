@@ -545,6 +545,7 @@ void CGameControllerMOD::Snap(int SnappingClient)
 					Hero++;
 					break;
 				case PLAYERCLASS_LOOPER:
+				case PLAYERCLASS_FFS:
 					Defender++;
 					break;
 					
@@ -851,6 +852,7 @@ int CGameControllerMOD::ChooseHumanClass(const CPlayer *pPlayer) const
 				nbDefender++;
 				break;
 			case PLAYERCLASS_LOOPER:
+			case PLAYERCLASS_FFS:
 				nbDefender++;
 				break;
 		}
@@ -889,6 +891,9 @@ int CGameControllerMOD::ChooseHumanClass(const CPlayer *pPlayer) const
 		1.0f : 0.0f;
 	Probability[PLAYERCLASS_LOOPER - START_HUMANCLASS - 1] =
 		(nbDefender < g_Config.m_InfDefenderLimit && g_Config.m_InfEnableLooper) ?
+		1.0f : 0.0f;
+	Probability[PLAYERCLASS_FFS - START_HUMANCLASS - 1] =
+		(nbDefender < g_Config.m_InfDefenderLimit && g_Config.m_InfEnableFFS) ?
 		1.0f : 0.0f;
 	
 
@@ -991,6 +996,8 @@ bool CGameControllerMOD::IsEnabledClass(int PlayerClass) {
 			return g_Config.m_InfEnableSniper;
 		case PLAYERCLASS_LOOPER:
 			return g_Config.m_InfEnableLooper;
+		case PLAYERCLASS_FFS:
+			return g_Config.m_InfEnableFFS;
 		default:
 			return false;
 	}
@@ -1029,6 +1036,7 @@ bool CGameControllerMOD::IsChoosableClass(int PlayerClass)
 				nbDefender++;
 				break;
 			case PLAYERCLASS_LOOPER:
+			case PLAYERCLASS_FFS:
 				nbDefender++;
 				break;
 		}
@@ -1050,6 +1058,7 @@ bool CGameControllerMOD::IsChoosableClass(int PlayerClass)
 		case PLAYERCLASS_SNIPER:
 			return (nbSupport < g_Config.m_InfSupportLimit);
 		case PLAYERCLASS_LOOPER:
+		case PLAYERCLASS_FFS:
 			return (nbDefender < g_Config.m_InfDefenderLimit);
 	}
 	
