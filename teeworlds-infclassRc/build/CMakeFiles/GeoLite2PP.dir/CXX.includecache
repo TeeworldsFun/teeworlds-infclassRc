@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/infclassr/GeoLite2PP/GeoLite2PP.cpp
+GeoLite2PP.hpp
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/infclassr/GeoLite2PP/GeoLite2PP.hpp
+GeoLite2PP_error_category.hpp
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/infclassr/GeoLite2PP/GeoLite2PP_error_category.hpp
+GeoLite2PP_version.hpp
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/infclassr/GeoLite2PP/GeoLite2PP_version.hpp
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/infclassr/GeoLite2PP/GeoLite2PP.hpp
+map
+-
+vector
+-
+string
+-
+sstream
+-
+system_error
+-
+maxminddb.h
+-
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/infclassr/GeoLite2PP/GeoLite2PP_error_category.cpp
+GeoLite2PP_error_category.hpp
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/infclassr/GeoLite2PP/GeoLite2PP_error_category.hpp
+maxminddb.h
+-
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/infclassr/GeoLite2PP/GeoLite2PP_error_category.hpp
+string
+-
+system_error
+-
+maxminddb.h
+-
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/infclassr/GeoLite2PP/GeoLite2PP_version.hpp
+

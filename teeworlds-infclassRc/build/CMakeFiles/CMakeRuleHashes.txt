@@ -1,0 +1,6 @@
+# Hashes of file build rules.
+bbd0785eae078455992713a84d9b2884 src/game/generated/git_revision.cpp
+1dcc760dd6f424f159fed04e1c7564a2 src/game/generated/protocol.cpp
+146101f09790e2fb4710499fbca75471 src/game/generated/protocol.h
+dcffc3c1cd2bfcd36d668a23e88bc94a src/game/generated/server_data.cpp
+7cdeec52ade527f4144717bea2258e51 src/game/generated/server_data.h

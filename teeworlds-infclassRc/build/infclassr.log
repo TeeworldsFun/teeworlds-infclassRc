@@ -1,0 +1,62 @@
+[2022-01-12 11:55:14][server]: starting...
+[2022-01-12 11:55:14][datafile]: loading. filename='maps/infc_headquarter.map'
+[2022-01-12 11:55:14][datafile]: allocsize=6372
+[2022-01-12 11:55:14][datafile]: readsize=5852
+[2022-01-12 11:55:14][datafile]: swaplen=5872
+[2022-01-12 11:55:14][datafile]: item_size=5096
+[2022-01-12 11:55:14][datafile]: loading done. datafile='maps/infc_headquarter.map'
+[2022-01-12 11:55:14][datafile]: loading. filename='maps/infc_headquarter.map'
+[2022-01-12 11:55:14][datafile]: allocsize=6372
+[2022-01-12 11:55:14][datafile]: readsize=5852
+[2022-01-12 11:55:14][datafile]: swaplen=5872
+[2022-01-12 11:55:14][datafile]: item_size=5096
+[2022-01-12 11:55:14][datafile]: loading done. datafile='maps/infc_headquarter.map'
+[2022-01-12 11:55:14][datafile]: loading data index=24 size=1088 uncompressed=144900
+[2022-01-12 11:55:14][datafile]: loading. filename='clientmaps/v2/infc_headquarter_2c7cbf17.map'
+[2022-01-12 11:55:14][datafile]: allocsize=25252
+[2022-01-12 11:55:14][datafile]: readsize=24548
+[2022-01-12 11:55:14][datafile]: swaplen=24568
+[2022-01-12 11:55:14][datafile]: item_size=23376
+[2022-01-12 11:55:14][datafile]: loading done. datafile='clientmaps/v2/infc_headquarter_2c7cbf17.map'
+[2022-01-12 11:55:14][server]: map crc is 2c7cbf17, generated map crc is e96f174d
+[2022-01-12 11:55:14][server]: maps/infc_x_current.map loaded in memory
+[2022-01-12 11:55:14][server]: server name is 'My InfClass server'
+[2022-01-12 11:55:14][console]: failed to open 'reset.cfg'
+[2022-01-12 11:55:14][datafile]: loading data index=34 size=123 uncompressed=608
+[2022-01-12 11:55:14][datafile]: loading data index=35 size=201 uncompressed=1064
+[2022-01-12 11:55:14][datafile]: loading data index=36 size=294 uncompressed=2584
+[2022-01-12 11:55:14][console]: executing 'maps/infc_headquarter.cfg'
+[2022-01-12 11:55:14][server]: version 0.6 ecc3ccbeb9e57b75
+[2022-01-12 11:55:14][server]: Map infc_malinalli_k9f added to the rotation list
+[2022-01-12 11:55:14][server]: Map infc_canyon added to the rotation list
+[2022-01-12 11:55:14][server]: Map infc_floatingislands added to the rotation list
+[2022-01-12 11:55:14][server]: Map infc_k9f_small added to the rotation list
+[2022-01-12 11:55:16][server]: player is ready. ClientID=0 addr=192.168.2.119:47985 secure=yes
+[2022-01-12 11:55:18][lang]: From client: "", for IP: ""
+[2022-01-12 11:55:18][server]: player has entered the game. ClientID=0 addr=192.168.2.119:47985
+[2022-01-12 11:55:18][game]: team_join player='0:FlowerFell-Sans' team=0
+[2022-01-12 11:55:18][datafile]: loading data index=32 size=209 uncompressed=144900
+[2022-01-12 11:55:18][datafile]: loading data index=33 size=210 uncompressed=144900
+[2022-01-12 11:55:18][game]: choose_class player='FlowerFell-Sans' class='12' random='0'
+[2022-01-12 11:55:38][game]: score player='FlowerFell-Sans' amount='10'
+[2022-01-12 11:55:44][game]: score player='FlowerFell-Sans' amount='10'
+[2022-01-12 11:56:07][server]: player is ready. ClientID=1 addr=192.168.2.119:33697 secure=yes
+[2022-01-12 11:56:08][lang]: From client: "", for IP: ""
+[2022-01-12 11:56:08][server]: player has entered the game. ClientID=1 addr=192.168.2.119:33697
+[2022-01-12 11:56:08][game]: team_join player='1:(1)FlowerFell-S' team=0
+[2022-01-12 11:56:10][game]: choose_class player='(1)FlowerFell-S' class='2' random='0'
+[2022-01-12 11:56:12][game]: score player='FlowerFell-Sans' amount='5'
+[2022-01-12 11:56:18][game]: infected victim='FlowerFell-Sans' duration='10' class='16'
+[2022-01-12 11:56:19][game]: kill killer='FlowerFell-Sans' victim='FlowerFell-Sans' weapon=-2
+[2022-01-12 11:56:19][game]: kill killer='FlowerFell-Sans' victim='(1)FlowerFell-S' weapon=0
+[2022-01-12 11:56:19][game]: infected victim='(1)FlowerFell-S' duration='11' class='16'
+[2022-01-12 11:56:19][game]: score player='FlowerFell-Sans' amount='30'
+[2022-01-12 11:56:19][game]: round_end winner='zombies' survivors='0' duration='11' round='1 of 4' type='classic'
+[2022-01-12 11:56:21][server]: client dropped. cid=0 addr=192.168.2.119:47985 reason=''
+[2022-01-12 11:56:21][server]: leave player='0:FlowerFell-Sans'
+[2022-01-12 11:56:21][infclass]: session created for the client 0
+[2022-01-12 11:56:21][infclass]: accusation created for the client 0
+[2022-01-12 11:56:25][game]: start round type='InfClassR' teamplay='0' id='1804289383'
+[2022-01-12 11:57:20][game]: kill killer='(1)FlowerFell-S' victim='(1)FlowerFell-S' weapon=-3
+[2022-01-12 11:57:20][game]: team_join player='1:(1)FlowerFell-S' team=0->-1
+[2022-01-12 11:57:20][game]: infected victim='(1)FlowerFell-S' duration='0' class='15'

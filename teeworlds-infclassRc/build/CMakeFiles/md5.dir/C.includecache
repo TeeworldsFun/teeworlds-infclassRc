@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/engine/external/md5/md5.c
+md5.h
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/engine/external/md5/md5.h
+string.h
+-
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/engine/external/md5/md5.h
+

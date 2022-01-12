@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/engine/external/json-parser/json.c
+json.h
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/engine/external/json-parser/json.h
+stdlib.h
+-
+stdio.h
+-
+string.h
+-
+ctype.h
+-
+math.h
+-
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/engine/external/json-parser/json.h
+string.h
+-
+

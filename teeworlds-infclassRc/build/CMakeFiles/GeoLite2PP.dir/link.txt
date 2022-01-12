@@ -1,0 +1,2 @@
+/usr/bin/ar qc libGeoLite2PP.a  CMakeFiles/GeoLite2PP.dir/src/infclassr/GeoLite2PP/GeoLite2PP.cpp.o CMakeFiles/GeoLite2PP.dir/src/infclassr/GeoLite2PP/GeoLite2PP_error_category.cpp.o
+/usr/bin/ranlib libGeoLite2PP.a

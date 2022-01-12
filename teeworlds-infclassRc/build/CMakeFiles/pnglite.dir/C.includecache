@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/engine/external/pnglite/pnglite.c
+zlib.h
+-
+zlite.h
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/engine/external/pnglite/zlite.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+pnglite.h
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/engine/external/pnglite/pnglite.h
+
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/src/engine/external/pnglite/pnglite.h
+

@@ -1,0 +1,13 @@
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/install/strip.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/edit_cache.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/GeoLite2PP.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/Server.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/pnglite.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/game-shared.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/install.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/list_install_components.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/rebuild_cache.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/engine-shared.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/install/local.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/md5.dir
+/home/flowerfell-sans/桌面/codeSpace/teeworlds-infclassRc/build/CMakeFiles/json.dir
