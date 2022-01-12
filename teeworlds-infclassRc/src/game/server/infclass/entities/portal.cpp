@@ -10,7 +10,7 @@
 #include <engine/server/roundstatistics.h>
 #include <game/server/infclass/infcgamecontroller.h>
 
-static const float PortalRadius = 30.f;
+static const float PortalRadius = 56.0f;
 
 CPortal::CPortal(CGameContext *pGameContext, vec2 CenterPos, int Owner, PortalType Type)
 	: CInfCEntity(pGameContext, CGameWorld::ENTTYPE_PORTAL, CenterPos, Owner, PortalRadius)
@@ -105,7 +105,7 @@ void CPortal::Explode(int DetonatedBy)
 		pOwner->OnPortalDestroy(this);
 	}
 
-	new CGrowingExplosion(GameServer(), m_Pos, vec2(0.0, -1.0), m_Owner, 6, GROWINGEXPLOSIONEFFECT_ELECTRIC_INFECTED);
+	new CGrowingExplosion(GameServer(), m_Pos, vec2(0.0, -1.0), m_Owner, 3, GROWINGEXPLOSIONEFFECT_ELECTRIC_INFECTED);
 	GameServer()->m_World.DestroyEntity(this);
 
 	char aBuf[256];

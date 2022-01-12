@@ -1754,6 +1754,8 @@ int CCharacter::GetInfWeaponID(int WID) const
 				return INFWEAPON_WITCH_PORTAL_LASER;
 			case PLAYERCLASS_MERCENARY:
 				return INFWEAPON_MERCENARY_LASER;
+			case PLAYERCLASS_BETA:
+				return INFWEAPON_SCIENTIST_GRENADE;
 			default:
 				return INFWEAPON_LASER;
 		}

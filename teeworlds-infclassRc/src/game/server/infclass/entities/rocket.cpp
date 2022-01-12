@@ -32,8 +32,9 @@ void CRocket::ProcessExplosion()
 	vec2 Dir = normalize(m_StartPos - GetPos());
 
 	// Do visuals:
-	int ExplosionRadius = 4;
+	int ExplosionRadius = 2;
 	new CGrowingExplosion(GameServer(), GetPos(), Dir, m_Owner, ExplosionRadius, GROWINGEXPLOSIONEFFECT_ELECTRIC_INFECTED);
+	new CGrowingExplosion(GameServer(), GetPos(), Dir, m_Owner, ExplosionRadius, GROWINGEXPLOSIONEFFECT_HIT_EFFECT);
 
 	// deal damage
 	CCharacter *apEnts[MAX_CLIENTS];
@@ -66,7 +67,7 @@ void CRocket::ProcessExplosion()
 			Dmg = 0;
 		}
 
-		apEnts[i]->TakeDamage(ForceDir * 1.0f, Dmg, GetOwner(), WEAPON_GUN, TAKEDAMAGEMODE_NOINFECTION);
+		apEnts[i]->TakeDamage(ForceDir * 5.0f, 3.0f, GetOwner(), WEAPON_GUN, TAKEDAMAGEMODE_NOINFECTION);
 	}
 
 	GameServer()->m_World.DestroyEntity(this);
@@ -114,7 +115,7 @@ void CRocket::Tick()
 	if(TargetWitchPortal || TargetChr || Collide || m_LifeSpan < 0 || GameLayerClipped(CurPos))
 	{
 		if(m_LifeSpan >= 0)
-			GameServer()->CreateSound(CurPos, SOUND_GRENADE_EXPLODE);
+			GameServer()->CreateSound(CurPos, SOUND_LASER_FIRE);
 		
 		ProcessExplosion();
 	}

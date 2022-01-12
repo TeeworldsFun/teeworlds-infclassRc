@@ -33,6 +33,7 @@
 #include <game/server/infclass/entities/white-hole.h>
 #include <game/server/infclass/infcgamecontroller.h>
 #include <game/server/infclass/infcplayer.h>
+#include <game/server/infclass/entities/turret-control.h>
 
 MACRO_ALLOC_POOL_ID_IMPL(CInfClassCharacter, MAX_CLIENTS)
 
@@ -715,6 +716,10 @@ void CInfClassCharacter::OnHammerFired(WeaponFireContext *pFireContext)
 			GameServer()->CreateSound(GetPos(), SOUND_NINJA_HIT);
 		}
 	}
+	else if(GetPlayerClass() == PLAYERCLASS_BETA)
+	{
+		PlacePortal(pFireContext);
+	}
 	else if(GetPlayerClass() == PLAYERCLASS_BOOMER)
 	{
 		if(!IsFrozen() && !IsInLove())
@@ -853,11 +858,11 @@ void CInfClassCharacter::OnHammerFired(WeaponFireContext *pFireContext)
 
 			for(CPortal* pPortal = (CPortal*) GameWorld()->FindFirst(CGameWorld::ENTTYPE_PORTAL); pPortal; pPortal = (CPortal*) pPortal->TypeNext())
 			{
-				if(m_pPlayer->IsZombie())
+				if(m_pPlayer->IsHuman())
 					continue;
 
-				if(pPortal->GetOwner() == m_pPlayer->GetCID())
-					continue;
+				//if(pPortal->GetOwner() == m_pPlayer->GetCID())
+				//	continue;
 
 				if(distance(GetPos(), pPortal->GetPos()) > (pPortal->m_ProximityRadius + m_ProximityRadius*0.5f))
 					continue;
@@ -1233,6 +1238,37 @@ void CInfClassCharacter::OnLaserFired(WeaponFireContext *pFireContext)
 		{
 			new CMercenaryLaser(GameServer(), GetPos(), Direction, GameServer()->Tuning()->m_LaserReach, GetCID());
 			GameServer()->CreateSound(GetPos(), SOUND_LASER_FIRE);
+		}
+	}
+	else if(GetPlayerClass() == PLAYERCLASS_BETA)
+	{
+		vec2 PortalShift = vec2(m_Input.m_TargetX, m_Input.m_TargetY);
+		vec2 PortalDir = normalize(PortalShift);
+		if(length(PortalShift) > 500.0f)
+			PortalShift = PortalDir * 500.0f;
+		vec2 PortalPos;
+
+		if(FindPortalPosition(GetPos() + PortalShift, PortalPos))
+		{
+			vec2 OldPos = m_Core.m_Pos;
+			m_Core.m_Pos = PortalPos;
+			m_Core.m_HookedPlayer = -1;
+			m_Core.m_HookState = HOOK_RETRACTED;
+			m_Core.m_HookPos = m_Core.m_Pos;
+			if(g_Config.m_InfScientistTpSelfharm > 0) {
+				auto pScientist = GetPlayer()->GetCharacter();
+				pScientist->TakeDamage(vec2(0.0f, 0.0f), g_Config.m_InfScientistTpSelfharm * 2, GetCID(), WEAPON_HAMMER, TAKEDAMAGEMODE_SELFHARM);
+			}
+			GameServer()->CreateDeath(OldPos, GetCID());
+			GameServer()->CreateDeath(PortalPos, GetCID());
+			GameServer()->CreateSound(PortalPos, SOUND_CTF_RETURN);
+			GameServer()->CreateExplosion(OldPos, m_pPlayer->GetCID(), WEAPON_LASER, false, TAKEDAMAGEMODE_NOINFECTION, 3.0F, 3.0F);
+			new CGrowingExplosion(GameServer(), OldPos, vec2(0.0, -1.0), m_pPlayer->GetCID(), 5, GROWINGEXPLOSIONEFFECT_FREEZE_INFECTED);
+			new CLaserTeleport(GameServer(), PortalPos, OldPos);
+		}
+		else
+		{
+			pFireContext->FireAccepted = false;
 		}
 	}
 	else
@@ -2023,12 +2059,12 @@ void CInfClassCharacter::PlacePortal(WeaponFireContext *pFireContext)
 CPortal *CInfClassCharacter::FindPortalInTarget()
 {
 	vec2 TargetPos = GetPos();
-
-	if (GetPlayerClass() == PLAYERCLASS_WITCH)
+	// witch: QAQ ;w;
+	if (GetPlayerClass() == PLAYERCLASS_BETA)
 	{
 		if(!FindWitchSpawnPosition(TargetPos))
 		{
-			// Witch can't place the portal here
+			// Beta can't place the portal here
 			return nullptr;
 		}
 	}
@@ -2069,11 +2105,12 @@ bool CInfClassCharacter::ProcessCharacterOnPortal(CPortal *pPortal, CCharacter *
 {
 	switch (GetPlayerClass())
 	{
-		case PLAYERCLASS_WITCH:
+		// hhhhhhhh witch gonna cry ;(
+		case PLAYERCLASS_BETA:
 			if (pPortal->GetPortalType() != CPortal::PortalType::In)
 				return false;
 
-			if(!pCharacter->IsZombie())
+			if(pCharacter->IsZombie())
 				return false;
 
 			if (pCharacter == this)
